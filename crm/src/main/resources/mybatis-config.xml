@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--指定配置文件（properties）的位置,使用${key}可以使用-->
+    <properties resource="jdbc.properties"/>
+
+
+    <!--setting:控制mybatis全局行为-->
+  <settings>
+        <!--&lt;!&ndash;设置mybatis输出日志&ndash;&gt;-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--环境配置：数据库的连接信息
+        default:必须和某个environment的id值一样。
+        告诉mybatis使用哪个数据库的连接信息。也就是访问那个数据库。
+    -->
+    <!--定义别名 -->
+    <typeAliases>
+        <!--第一种方式:指定一个类一个自定义别名
+            type:自定义类型的全限定名称
+            alias:别名（短小，容易记）
+        -->
+        <!--
+        <typeAlias type="com.bjpowernode.domain.ViewStudent" alias="ViewStudent"></typeAlias>
+        -->
+        <!--第二种方式
+            name:包名，包含包中所有得类，类名就是别名（类名不区分大小写）
+
+        -->
+        <package name="com.bjpowernode.crm.settings.domain"></package>
+    </typeAliases>
+
+
+    <!--基于PageHelper分页 ,在<enviroments>之前加入-->
+  <!--  <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
+-->
+    <environments default="development">
+        <!--enviroment:一个数据库信息的配置，环境
+            id：一个唯一值，自定义，表示环境的名称
+         -->
+        <environment id="development">
+            <!--transactionManager:mybatis的事务类型
+                type:事务处理类型
+                    JDBC：（表示使用jdbc中的Connetion对象的commit,
+                        rollback做事务处理）
+                    MANAGED:把mybatis的事务处理委托给其他容器（一个服务器软件，一个框架）
+            -->
+            <transactionManager type="JDBC"/>
+            <!-- dataSource:表示数据源，连接数据库的，java体系中，
+                    规定实现了javax.sql.DataSource接口的都是数据源
+                    表示Connection对象的。
+                    type:表示数据库源的类型，
+                        POOLED：表示使用连接池
+                        UPOOLED:不使用连接池，在每次执行sql语句，先创建连接，
+                                执行sql，再关闭连接mybatis会创建一个UnPooledDateSource,
+                                管理Connection对象的使用
+                        JNDI:java命名和目录服务（windows注册表）
+            -->
+            <dataSource type="POOLED">
+                <!--driver,url,username,password 是固定的，不能自定义-->
+                <!--数据库的驱动类名-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <!--连接数据库的url字符串-->
+                <property name="url" value="${jdbc.url}"/>
+                <!--访问数据库的用户名-->
+                <property name="username" value="${jdbc.user}"/>
+                <!--密码-->
+                <property name="password" value="${jdbc.passwd}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--sql mapper（sql映射文件）的位置-->
+    <mappers>
+        <!--一个mapper标签指定一个文件的位置。从类路径开始的路径信息-->
+        <!--<mapper resource="com\bjpowernode\dao\StudentDao.xml"/>-->
+        <!-- 多个文件写多个<mapper>文件
+            <mapper resource="com\bjpowernode\dao\SchoolDao.xml"/>
+        -->
+        <!--第二种方式：直接导入一整个包,接口名要和mapper文件名称一样，区分大小写，并且在同一目录-->
+        <package name="com.bjpowernode.crm.settings.dao"/>
+    </mappers>
+</configuration>

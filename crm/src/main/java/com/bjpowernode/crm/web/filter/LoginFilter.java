@@ -17,14 +17,24 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         System.out.println("进入到验证有没有登录过得过滤器");
+
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user !=null){//登陆过
+
+        String path = request.getServletPath();
+
+        //不应该拦截的资源
+        if ("/login.jsp".equals(path) ||"/settings/user/login.do".equals(path)){
             chain.doFilter(req,resp);
-        }else {
-            //没登陆过
+        }else {//应该拦截的
+
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+
+            if (user !=null){//登陆过
+                chain.doFilter(req,resp);
+            }else {
+                //没登陆过
            /*
             转发和重定向写法
             转发：使用特殊的绝对路径的使用方式，这种绝对路径前面不加/项目名
@@ -37,9 +47,12 @@ public class LoginFilter implements Filter {
             为当前的登录页的路径
 
             */
-           response.sendRedirect(request.getContextPath()+"/login.jsp");
 
+                response.sendRedirect(request.getContextPath()+"/login.jsp");
+
+            }
         }
+
     }
 
     @Override

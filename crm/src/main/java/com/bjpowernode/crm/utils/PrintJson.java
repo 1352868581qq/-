@@ -21,6 +21,7 @@ public class PrintJson {
 		ObjectMapper om = new ObjectMapper();
 		try {
 			//{"success":true}
+			response.setContentType("application/json;charset=utf-8");
 			String json = om.writeValueAsString(map);
 			response.getWriter().print(json);
 		} catch (JsonGenerationException e) {

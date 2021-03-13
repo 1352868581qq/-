@@ -2,7 +2,11 @@ package com.bjpowernode.settings;
 
 import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.MD5Util;
+import org.junit.Test;
+import org.junit.runner.Request;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 public class Test1 {
@@ -36,5 +40,11 @@ public class Test1 {
         String pwd ="13005039536a";
         pwd = MD5Util.getMD5(pwd);
         System.out.println(pwd);*/
+    }
+
+    @Test
+    public static void m1(HttpServletRequest request, HttpServletResponse response) {
+        String path = request.getContextPath();
+        System.out.println(path);
     }
 }

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjpowernode.crm.workbench.dao.ClueDao">
+    <!--创建线索-->
+	<insert id="saveClue">
+        insert into tbl_clue(
+            id,
+            fullname,
+            appellation,
+            owner,
+            company,
+            job,
+            email,
+            phone,
+            website,
+            mphone,
+            state,
+            source,
+            createBy,
+            createTime,
+            description,
+            contactSummary,
+            nextContactTime,
+            address
+        )  values(
+            #{id},
+            #{fullname},
+            #{appellation},
+            #{owner},
+            #{company},
+            #{job},
+            #{email},
+            #{phone},
+            #{website},
+            #{mphone},
+            #{state},
+            #{source},
+            #{createBy},
+            #{createTime},
+            #{description},
+            #{contactSummary},
+            #{nextContactTime},
+            #{address}
+        )
+    </insert>
+	<!--分页查询-->
+  	<select id="pageList" resultType="Clue">
+        select
+        c.id,
+        c.fullname,
+        c.appellation,
+        c.company,
+        c.phone,
+        c.source,
+        u.name as owner,
+        c.mphone,
+        c.state
+        from tbl_clue c
+        join tbl_user u
+        on u.id=c.owner
+    <where>
+        <if test="fullname !=null and fullname !=''" >
+          fullname like '%' #{fullname} '%'
+        </if>
+        <if test="company !=null and company !=''">
+            company like '%' #{company} '%'
+        </if>
+        <if test="phone !=null and phone !=''">
+            phone like '%' #{phone} '%'
+        </if>
+        <if test="source !=null and source !=''">
+            source like '%' #{source} '%'
+        </if>
+        <if test="owner !=null and owner !=''">
+            owner like '%' #{owner} '%'
+        </if>
+        <if test="mphone !=null and mphone !=''">
+            mphone like '%' #{mphone} '%'
+        </if>
+        <if test="state !=null and state !=''">
+            state like '%' #{state} '%'
+        </if>
+    </where>
+        order by c.createTime desc
+        limit #{skipCount},#{pageSize}
+
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count(*) from tbl_clue
+    </select>
+    <select id="getDetail" resultType="Clue">
+        select
+            c.id,
+            c.fullname,
+            c.appellation,
+            u.name as owner,
+            c.company,
+            c.job,
+            c.email,
+            c.phone,
+            c.website,
+            c.mphone,
+            c.state,
+            c.source,
+            c.createBy,
+            c.createTime,
+            c.description,
+            c.contactSummary,
+            c.nextContactTime,
+            c.address,
+            c.editBy,
+	        c.editTime
+            from tbl_clue c
+            join tbl_user u
+            on c.owner=u.id
+            where c.id=#{id}
+    </select>
+    <select id="getActivityByClueId" resultType="Activity">
+      select
+            a.name,a.startDate,a.endDate,u.name as owner,
+            car.id as id
+        from
+            tbl_activity a
+        join
+            tbl_clue_activity_relation car
+        on
+            a.id = car.activityId
+        join
+            tbl_user u
+        on
+            a.owner = u.id
+        where
+            car.clueId = #{clueId}
+
+
+
+
+    </select>
+    <delete id="unbund">
+        delete from tbl_clue_activity_relation where id=#{id}
+    </delete>
+    <select id="searchActivity" resultType="Activity">
+        select
+        a.id,a.name,
+        a.startDate,
+        a.endDate,
+        u.name as owner
+        from  tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        where a.name like '%' #{aname} '%'
+        and a.id not in(
+          select activityId
+          from tbl_clue_activity_relation
+          where clueId=#{clueId}
+
+        )
+
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

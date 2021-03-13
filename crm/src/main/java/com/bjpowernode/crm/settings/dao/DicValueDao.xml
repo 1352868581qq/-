@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.crm.settings.dao.DicValueDao">
+    <!--
+        id:表示你要执行的sql语法的唯一标识，mybatis会使用这个
+            id的值来找到要执行的sql语句，可以自定义，但要求使用
+            接口中的方法名称。
+
+    -->
+    <select id="getDicValuelist" resultType="DicValue">
+      select * from tbl_dic_value where typeCode=#{code}
+    </select>
+</mapper>

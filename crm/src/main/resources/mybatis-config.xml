@@ -31,6 +31,7 @@
 
         -->
         <package name="com.bjpowernode.crm.settings.domain"></package>
+        <package name="com.bjpowernode.crm.workbench.domain"></package>
     </typeAliases>
 
 
@@ -62,14 +63,10 @@
                         JNDI:java命名和目录服务（windows注册表）
             -->
             <dataSource type="POOLED">
-                <!--driver,url,username,password 是固定的，不能自定义-->
-                <!--数据库的驱动类名-->
                 <property name="driver" value="${jdbc.driver}"/>
-                <!--连接数据库的url字符串-->
                 <property name="url" value="${jdbc.url}"/>
-                <!--访问数据库的用户名-->
                 <property name="username" value="${jdbc.user}"/>
-                <!--密码-->
+
                 <property name="password" value="${jdbc.passwd}"/>
             </dataSource>
         </environment>
@@ -83,5 +80,6 @@
         -->
         <!--第二种方式：直接导入一整个包,接口名要和mapper文件名称一样，区分大小写，并且在同一目录-->
         <package name="com.bjpowernode.crm.settings.dao"/>
+        <package name="com.bjpowernode.crm.workbench.dao"/>
     </mappers>
 </configuration>

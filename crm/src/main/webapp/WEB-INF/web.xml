@@ -1,10 +1,21 @@
-<!DOCTYPE web-app PUBLIC
+<!--<!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >-->
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+<!--
+    add/create:跳转到添加页，或者打开添加操作的模态窗口
+    save:执行添加操作
+    edit:跳转到修改页面，或者打开修改的模态窗口
+    update:执行修改操作
+    get:执行查询操作     find/select/query/..
+    特殊操作：..
+
+
+-->
+  <!--格式过滤器EncodingFilter-->
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>com.bjpowernode.crm.web.filter.EncodingFilter</filter-class>
@@ -14,6 +25,7 @@
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
 
+  <!--登录过滤器LoginFilter-->
   <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.bjpowernode.crm.web.filter.LoginFilter</filter-class>
@@ -22,6 +34,16 @@
     <filter-name>LoginFilter</filter-name>
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <!--字典监听器-->
+  <listener>
+    <listener-class>com.bjpowernode.crm.web.listener.SysInitListener</listener-class>
+  </listener>
+
+<!--用户登录UserController-->
   <servlet>
     <servlet-name>UserController</servlet-name>
     <servlet-class>com.bjpowernode.crm.settings.web.controller.UserController</servlet-class>
@@ -29,5 +51,89 @@
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
     <url-pattern>/settings/user/login.do</url-pattern>
+  </servlet-mapping>
+
+  <!--市场活动ActivityController-->
+  <servlet>
+    <servlet-name>ActivityController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ActivityController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/getUserlist.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/save.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/pageList.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/deleteActivity.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/getUserListAndActivity.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/updateActivity.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/detail.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/getRemarkListByAid.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/saveRemark.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
+  </servlet-mapping>
+
+  <!--线索模块clue-->
+  <servlet>
+    <servlet-name>ClueController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ClueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/save.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/pageList.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/detail.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/getActivityByClueId.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/unbund.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/searchActivity.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/bund.do</url-pattern>
   </servlet-mapping>
 </web-app>

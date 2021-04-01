@@ -51,7 +51,6 @@ public class ActivityController extends HttpServlet {
         } else if ("/workbench/activity/saveRemark.do".equals(path)){
             saveRemark(request,response);
         } else if ("/workbench/activity/updateRemark.do".equals(path)){
-            System.out.println(2);
             editRemark(request,response);
         }
 

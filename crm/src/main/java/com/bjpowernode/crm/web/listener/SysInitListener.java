@@ -9,9 +9,7 @@ import com.bjpowernode.crm.utils.ServiceFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SysInitListener implements ServletContextListener {
     /*
@@ -37,7 +35,20 @@ public class SysInitListener implements ServletContextListener {
         }
         System.out.println("服务器缓存处理数据字典结束");
 
+        //-------------------------------------------
+
+        ResourceBundle bundle = ResourceBundle.getBundle("Stage2Possibility");
+        Enumeration<String> keys2 = bundle.getKeys();
+        Map<String,String> pMap = new HashMap<>();
+        while(keys2.hasMoreElements()){
+            String key = keys2.nextElement();
+            String value = bundle.getString(key);
+            pMap.put(key, value);
+        }
+        application.setAttribute("pMap", pMap);
     }
+
+
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {

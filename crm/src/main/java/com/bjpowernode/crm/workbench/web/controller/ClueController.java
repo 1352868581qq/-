@@ -9,6 +9,7 @@ import com.bjpowernode.crm.vo.PaginationVo;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.domain.ContactsActivityRelation;
+import com.bjpowernode.crm.workbench.domain.Tran;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.imlp.ClueServiceImmpl;
 
@@ -44,9 +45,61 @@ public class ClueController extends HttpServlet {
             searchActivity(request,response);
         }else if ("/workbench/clue/bund.do".equals(path)){
             bund(request,response);
+        } else if ("/workbench/clue/SearchActivityByaname.do".equals(path)){
+            SearchActivityByaname(request,response);
+        }else if ("/workbench/clue/convert.do".equals(path)){
+            convert(request,response);
         }
 
     }
+
+    private void convert(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String flag = request.getParameter("flag");
+        //(1) 获取到线索id，通过线索id获取线索对象（线索对象当中封装了线索的信息）
+        String clueId = request.getParameter("clueId");
+        String CreateBy = ((User)request.getSession().getAttribute("user")).getName();
+        //带数据的from请求,创建了一笔交易
+        Tran tran = null;
+
+
+        if ("a".equals(flag)){
+            tran = new Tran();
+            //接收交易表单中参数
+
+            String amountOfMoney = request.getParameter("amountOfMoney");
+            String tradeName = request.getParameter("tradeName");
+            String expectedClosingDate = request.getParameter("expectedClosingDate");
+            String stage = request.getParameter("stage");
+            String activityId = request.getParameter("activityId");
+
+            tran.setId(UUIDUtil.getUUID());
+            tran.setMoney(amountOfMoney);
+            tran.setName(tradeName);
+            tran.setExpectedDate(expectedClosingDate);
+            tran.setStage(stage);
+            tran.setActivityId(activityId);
+            tran.setCreateBy(CreateBy);
+            tran.setCreateTime(DateTimeUtil.getSysTime());
+
+
+        }
+        ClueService cs = (ClueService)ServiceFactory.getService(new ClueServiceImmpl());
+        boolean flag1 = cs.convert(clueId,tran,CreateBy);
+        if (flag1){
+            response.sendRedirect(request.getContextPath()+"/workbench/clue/index.jsp");
+        }
+
+
+    }
+
+    private void SearchActivityByaname(HttpServletRequest request, HttpServletResponse response) {
+        String aname = request.getParameter("aname");
+        ClueService cs = (ClueService)ServiceFactory.getService(new ClueServiceImmpl());
+        List<Activity> alist = cs.SearchActivityByaname(aname);
+        PrintJson.printJsonObj(response,alist);
+
+    }
+
     //关联活动
     private void bund(HttpServletRequest request, HttpServletResponse response) {
 

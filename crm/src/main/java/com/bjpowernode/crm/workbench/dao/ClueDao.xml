@@ -88,10 +88,11 @@
         limit #{skipCount},#{pageSize}
 
     </select>
-
+    <!--分页查询总记录数-->
     <select id="getTotal" resultType="int">
         select count(*) from tbl_clue
     </select>
+    <!--查询线索对象详细信息，通过id查询-->
     <select id="getDetail" resultType="Clue">
         select
             c.id,
@@ -161,6 +162,13 @@
         )
 
     </select>
+    <select id="getClueByClueId" resultType="Clue">
+        select * from tbl_clue where id=#{clueId}
+    </select>
+    <delete id="delete">
+        delete from tbl_clue where id=#{clueId}
+    </delete>
+
 
 </mapper>
 

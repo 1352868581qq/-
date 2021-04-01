@@ -5,7 +5,157 @@
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.TranDao">
 	
-  	
+  	<insert id="save">
+        insert into tbl_tran(
+            id,
+            owner,
+            money,
+            name,
+            expectedDate,
+            customerId,
+            stage,
+            type,
+            source,
+            activityId,
+            contactsId,
+            createBy,
+            createTime,
+            description,
+            contactSummary,
+            nextContactTime
+
+        )values (
+            #{id},
+            #{owner},
+            #{money},
+            #{name},
+            #{expectedDate},
+            #{customerId},
+            #{stage},
+            #{type},
+            #{source},
+            #{activityId},
+            #{contactsId},
+            #{createBy},
+            #{createTime},
+            #{description},
+            #{contactSummary},
+            #{nextContactTime}
+
+        )
+    </insert>
+
+    <select id="getTranPageList" resultType="Tran">
+        select
+            t.id,
+            t.name,
+            t.stage,
+            t.type,
+            t.source,
+            u.name as owner,
+            c.fullname as contactsId,
+            ct.name as customerId
+        from
+            tbl_tran t
+            join tbl_user u on t.owner = u.id
+            join tbl_contacts c on t.contactsid = c.id
+            join tbl_customer ct on t.customerid = ct.id
+        <where>
+            <if test="name != null and name !=''">
+                t.name like '%' #{name} '%'
+            </if>
+            <if test="stage != null and stage !=''">
+                and t.stage like '%' #{stage} '%'
+            </if>
+            <if test="type != null and type !=''">
+                and t.type like '%' #{type} '%'
+            </if>
+            <if test="owner != null and owner !=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="contactsfullname != null and contactsfullname !=''">
+                and c.fullname like '%' #{contactsfullname} '%'
+            </if>
+            <if test="customername != null and customername !=''">
+                and ct.name like '%' #{customername} '%'
+            </if>
+        </where>
+        order by name
+        limit #{skipCount},#{pageSize}
+
+
+
+    </select>
+    <select id="getTotal" resultType="int">
+        select
+        count(*)
+        from
+        tbl_tran t
+        join tbl_user u on t.owner = u.id
+        join tbl_contacts c on t.contactsid = c.id
+        join tbl_customer ct on t.customerid = ct.id
+        <where>
+            <if test="name != null and name !=''">
+                t.name like '%' #{name} '%'
+            </if>
+            <if test="stage != null and stage !=''">
+                and t.stage like '%' #{stage} '%'
+            </if>
+            <if test="type != null and type !=''">
+                and t.type like '%' #{type} '%'
+            </if>
+            <if test="owner != null and owner !=''">
+                and u.name like '%'#{owner} '%'
+            </if>
+            <if test="contactsfullname != null and contactsfullname !=''">
+                and c.fullname like '%'#{contactsfullname} '%'
+            </if>
+            <if test="customername != null and customername !=''">
+                and ct.name like '%'#{customername} '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="getDetail" resultType="Tran">
+        select
+            t.id,
+            u.name as owner,
+            t.money,
+            t.name,
+            t.expectedDate,
+            ct.name as customerId,
+            t.stage,
+            t.type,
+            t.source,
+            a.name as activityId,
+            c.fullname as contactsId,
+            t.createBy,
+            t.createTime,
+            t.editBy,
+            t.editTime,
+            t.description,
+            t.contactSummary,
+            t.nextContactTime
+          from  tbl_tran t
+          join tbl_user u on t.owner = u.id
+          join tbl_contacts c on t.contactsid = c.id
+          join tbl_customer ct on t.customerid = ct.id
+          join tbl_activity a on t.activityId = a.id
+          where t.id = #{id}
+    </select>
+
+    <update id="changeStage">
+        update tbl_tran set stage = #{stage},editBy = #{editBy}, editTime = #{editTime} where id=#{id}
+    </update>
+    <select id="getTranTotal" resultType="int">
+        select count(*) from tbl_tran
+    </select>
+    <select id="getChart" resultType="map">
+        select count(*) as value,stage as name
+        from tbl_tran
+        group by stage
+        order by stage
+    </select>
 </mapper>
 
 

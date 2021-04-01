@@ -10,7 +10,8 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         System.out.println("进入到过滤编码得过滤器");
         req.setCharacterEncoding("utf-8");
-        resp.setContentType("test/html;chatset=utf-8");
+        //resp.setContentType("test/html;chatset=utf-8");
+        resp.setContentType("application/json;charset=utf-8");
         chain.doFilter(req, resp);
     }
 

@@ -1,16 +1,18 @@
 package com.bjpowernode.crm.workbench.domain;
 
+import java.util.Map;
+
 public class Tran {
 	
 	private String id;
 	private String owner;
-	private String money;	//交易金额
-	private String name;	//交易名称
+	private String money;			//交易金额
+	private String name;			//交易名称
 	private String expectedDate;	//预计成交日期
 	private String customerId;
-	private String stage;	//交易阶段
-	private String type;	//交易类型
-	private String source;	//交易来源
+	private String stage;			//交易阶段
+	private String type;			//交易类型
+	private String source;			//交易来源
 	private String activityId;
 	private String contactsId;
 	private String createBy;
@@ -20,7 +22,15 @@ public class Tran {
 	private String description;
 	private String contactSummary;	//联系纪要
 	private String nextContactTime;	//下次联系时间
-	
+
+	private String possibility;//外加的可能性
+
+	public String getPossibility() {
+		return possibility;
+	}
+	public void setPossibility(String possibility) {
+		this.possibility = possibility;
+	}
 	public String getId() {
 		return id;
 	}

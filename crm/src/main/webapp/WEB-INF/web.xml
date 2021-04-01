@@ -24,6 +24,11 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
 
   <!--登录过滤器LoginFilter-->
   <filter>
@@ -133,7 +138,63 @@
     <url-pattern>/workbench/clue/searchActivity.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+  <servlet-name>ClueController</servlet-name>
+  <url-pattern>/workbench/clue/bund.do</url-pattern>
+</servlet-mapping>
+  <servlet-mapping>
     <servlet-name>ClueController</servlet-name>
-    <url-pattern>/workbench/clue/bund.do</url-pattern>
+    <url-pattern>/workbench/clue/SearchActivityByaname.do</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/convert.do</url-pattern>
+  </servlet-mapping>
+
+
+  <!--交易模块-->
+  <servlet>
+    <servlet-name>TransactionController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.TransactionController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/GetUserList.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/GetMarketActivity.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/GetContactsByName.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/save.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/getTranPageList.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/detail.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/getTranHistoryList.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  <servlet-name>TransactionController</servlet-name>
+  <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
+</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/getCharts.do</url-pattern>
+  </servlet-mapping>
+
 </web-app>

@@ -10,6 +10,18 @@
         values (#{id},#{clueId},#{activityId})
 
     </insert>
+    <select id="SearchActivityByaname" resultType="Activity">
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate
+        from tbl_activity a join tbl_user u on u.id=a.owner
+        where a.name like '%' #{aname} '%'
+    </select>
+    <select id="getListByClueId" resultType="ClueActivityRelation">
+        select * from tbl_clue_activity_relation where clueId=#{clueId}
+    </select>
+    <delete id="delete">
+        delete from tbl_clue_activity_relation where clueId=#{clueId}
+    </delete>
+
   	
 </mapper>
 

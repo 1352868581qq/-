@@ -23,4 +23,7 @@ public interface ClueDao {
 
     List<Activity> searchActivity(Map<String, String> map);
 
+    Clue getClueByClueId(String clueId);
+
+    int delete(String clueId);
 }
